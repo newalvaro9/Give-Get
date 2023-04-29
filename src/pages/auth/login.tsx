@@ -3,6 +3,8 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next/types';
 
+import styles from '@/styles/Card.module.css'
+
 import Layout from '@/components/layout';
 import Alert from '@/components/alert';
 
@@ -52,24 +54,34 @@ export default function Login() {
     }
 
     return (
-        <Layout title={"Iniciar sesión"}>
+        <Layout title={"Iniciar sesión - Give Your Time"}>
             <form action="/api/auth/callback/credentials" method="POST">
-                <Alert error={error} setError={setError} />
+                <div className={styles["card"]}>
+                    <div className={styles["card-body"]}>
+                        <h2 className={styles['title']}>Inicia sesión para continuar</h2>
 
-                <div>
-                    <label className="label" htmlFor="username">
-                        Username
-                    </label>
-                    <input type="text" name="username" ref={usernameRef} required />
-                </div>
+                        <Alert error={error} setError={setError} />
 
-                <div>
-                    <label className="label" htmlFor="password">
-                        Password
-                    </label>
-                    <input type="password" name="password" ref={passwordRef} required />
+                        <div className={styles["forms"]}>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="username">
+                                    Usuario
+                                </label>
+                                <input type="text" id="username" name="username" ref={usernameRef} required />
+                            </div>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="password">
+                                    Contraseña
+                                </label>
+                                <input type="password" name="password" ref={passwordRef} required />
+                            </div>
+                        </div>
+
+                        <button id="login" type="button" onClick={handleSignIn} className={styles["submit-input"]}>Iniciar sesión</button>
+                    </div>
                 </div>
-                <button id="login" type="button" onClick={handleSignIn}>Log in</button>
             </form>
         </Layout>
     )
