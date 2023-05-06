@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import styles from '@/styles/Posts.module.css'
 import formatDate from '../../utils/formatDate';
 import { GetServerSideProps } from 'next';
+import { useState } from 'react';
 import Image from 'next/image';
 import posts from '../../lib/database/models/posts';
 import connect from '../../lib/database/database';
@@ -20,11 +21,13 @@ type Props = {
 }
 
 export default function Home({ arrayData }: Props) {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   return (
-    <Layout>
+    <Layout setSearchQuery={setSearchQuery}>
       <h1>Gente que necesita ayuda</h1>
       <div className={styles['cards']}>
-        {arrayData.map(data => (
+        {arrayData.filter((item) => item.question.toLowerCase().includes(searchQuery.toLowerCase())).map(data => (
           <div className={styles['card']}>
             <div className={styles['card-header']}>
               <Image

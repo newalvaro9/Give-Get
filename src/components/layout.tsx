@@ -1,7 +1,8 @@
 import Head from 'next/head'
+import Navbar from './navbar'
 
 //Main page /...
-export default function Layout({ children, title }: { children: React.ReactNode, title?: string }) {
+export default function Layout({ children, title, setSearchQuery }: { children: React.ReactNode, title?: string, setSearchQuery: Function }) {
     return (
         <>
             <Head>
@@ -11,6 +12,7 @@ export default function Layout({ children, title }: { children: React.ReactNode,
                 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
             </Head>
 
+            <Navbar setSearchQuery={setSearchQuery} />
             <div className='container-center-page'>
                 {children}
             </div>
