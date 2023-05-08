@@ -11,7 +11,7 @@ import Alert from "@/components/alert";
 export default function Upload() {
     const [error, setError] = useState<string>("")
 
-    const categoryRef = useRef<HTMLInputElement>(null)
+    const categoryRef = useRef<HTMLSelectElement>(null)
     const questionRef = useRef<HTMLTextAreaElement>(null)
 
     const router = useRouter();
@@ -69,26 +69,41 @@ export default function Upload() {
             <h2 className={styles['title']}>Necesito Ayuda</h2>
 
             <Alert error={error} setError={setError} />
+            <form action="/api/create" method="POST">
+                <div className={styles["forms"]}>
 
-            <div className={styles["forms"]}>
+                    <div className={styles["form-group"]}>
+                        <label className="label" htmlFor="username">
+                            Categoria
+                        </label>
+                        <select name="username" id="category" ref={categoryRef}>
+                            <option value="Matemàtiques">Matemàtiques</option>
+                            <option value="Ciències Naturals">Ciències Naturals</option>
+                            <option value="Llengua i Literatura">Llengua i Literatura</option>
+                            <option value="Història">Història</option>
+                            <option value="Geografia">Geografia</option>
+                            <option value="Educació Física">Educació Física</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Informàtica">Informàtica</option>
+                            <option value="Anglès">Idiomes Estrangers (Anglès)</option>
+                            <option value="Francès">Idiomes Estrangers (Francès)</option>
+                            <option value="Alemany">Idiomes Estrangers (Alemany)</option>
+                            <option value="Religió">Religió</option>
+                        </select>
 
-                <div className={styles["form-group"]}>
-                    <label className="label" htmlFor="username">
-                        Categoria
-                    </label>
-                    <input type="text" id="category" name="username" ref={categoryRef} required />
+                    </div>
+
+                    <div className={styles["form-group"]}>
+                        <label className="label" htmlFor="password">
+                            En que necesitas ayuda?
+                        </label>
+                        <textarea name="question" id="myTextArea" ref={questionRef} onInput={autoResize}></textarea>
+                    </div>
                 </div>
 
-                <div className={styles["form-group"]}>
-                    <label className="label" htmlFor="password">
-                        En que necesitas ayuda?
-                    </label>
-                    <textarea name="question" id="myTextArea" ref={questionRef} onInput={autoResize}></textarea>
-                </div>
-            </div>
+                <button id="new" type="button" onClick={handleAdd}>Pedir ayuda</button>
 
-            <button id="new" type="button" onClick={handleAdd}>Pedir ayuda</button>
-
+            </form>
 
         </Layout >
     );

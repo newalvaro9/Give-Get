@@ -1,11 +1,13 @@
 import Layout from '@/components/layout';
 import styles from '@/styles/Posts.module.css'
-import formatDate from '../../utils/formatDate';
+import formatDate from '../../../utils/formatDate';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import Image from 'next/image';
-import posts from '../../lib/database/models/posts';
-import connect from '../../lib/database/database';
+import posts from '../../../lib/database/models/posts';
+import connect from '../../../lib/database/database';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 type Props = {
   arrayData: Array<{
@@ -17,11 +19,21 @@ type Props = {
     postedAt: string;
     category: string;
     question: string;
-  }>
+  }>;
+  sessionUserId: number;
 }
 
-export default function Home({ arrayData }: Props) {
+export default function Home({ arrayData, sessionUserId }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const router = useRouter();
+
+  const handleDelete = (post: number) => {
+    router.push('/delete/' + post);
+  }
+  
+  const handleHelp = (post: number) => {
+    router.push('/help/' + post)
+  }
 
   return (
     <Layout setSearchQuery={setSearchQuery}>
@@ -42,11 +54,21 @@ export default function Home({ arrayData }: Props) {
               </div>
             </div>
             <div className={styles['card-body']}>
-              <span>{data.question}</span>
+              <pre>{data.question}</pre>
             </div>
             <div className={styles['card-helpers']}>
               <div className={styles['helper']}>
-                <button>AYUDAR</button>
+                <button onClick={() => handleHelp(data.postid)}>AJUDA'M</button>
+                {data.postedBy.userid === sessionUserId && (
+                  <button onClick={() => handleDelete(data.postid)}>
+                    <Image
+                      src={"/trash.svg"}
+                      width={20}
+                      height={15}
+                      alt={'Delete'}
+                    />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -71,11 +93,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       category: item.category,
       question: item.question
     };
-  });
+  }).reverse();
+
+  const session = await getSession(context);
 
   return {
     props: {
-      arrayData
+      arrayData: arrayData,
+      sessionUserId: (session?.user as any).userid
     }
   };
 }

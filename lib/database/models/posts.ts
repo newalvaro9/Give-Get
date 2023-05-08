@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Posts = new mongoose.Schema({
     postid: {
         type: Number,
-        required: true
+        unique: true
     },
     postedBy: {
         userid: {

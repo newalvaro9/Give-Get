@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from '@/styles/Navbar.module.css'
 import Link from "next/link";
 
-export default function Navbar({ setSearchQuery }: { setSearchQuery: Function }) {
+export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | undefined }) {
     const { data: session } = useSession();
 
     const [showNavbarResponsive, setShowNavbarResponsive] = useState<boolean>(false)
@@ -25,8 +25,9 @@ export default function Navbar({ setSearchQuery }: { setSearchQuery: Function })
                 <div className={`${styles['collapse']} ${styles['navbar-collapse']} ${showNavbarResponsive && styles['show']}`} id="navbarCollapse">
                     <div className={`${styles['navbar-nav']} ${styles['ms-auto']}`}>
 
-                        <input className={styles["nav-input"]} onChange={(e) => setSearchQuery(e.target.value)}></input>
-
+                        {setSearchQuery && (
+                            <input className={styles["nav-input"]} onChange={(e) => setSearchQuery(e.target.value)}></input>
+                        )}
                         {session ? (
                             <>
                                 <Link href="/ineedhelp" className={styles["nav-link"]}>Publicar</Link>

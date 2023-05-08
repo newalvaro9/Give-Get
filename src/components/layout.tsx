@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Navbar from './navbar'
 
 //Main page /...
-export default function Layout({ children, title, setSearchQuery }: { children: React.ReactNode, title?: string, setSearchQuery: Function }) {
+export default function Layout({ children, title, setSearchQuery }: { children: React.ReactNode, title?: string, setSearchQuery?: Function }) {
     return (
         <>
             <Head>
