@@ -32,7 +32,7 @@ export default function Home({ arrayData, sessionUserId }: Props) {
   }
   
   const handleHelp = (post: number) => {
-    router.push('/help/' + post)
+    router.push('/posts/' + post)
   }
 
   return (
