@@ -1,6 +1,8 @@
 /* CARD */
 .homeWr {
-
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
 }
 
 .cards {
@@ -10,21 +12,11 @@
 }
 
 .card {
-    width: 500px;
-    height: fit-content;
-    background-color: white;
-    padding: 24px;
-    border: 2px solid #ebf2f7;
-    border-radius: 8px;
-    align-self: center;
-}
-
-.q-card {
     width: 650px;
     height: fit-content;
     background-color: white;
     padding: 24px;
-    border: 2px solid #ebf2f7;
+    border: 2px solid #bcc0c3;
     border-radius: 8px;
     align-self: center;
 }
@@ -32,6 +24,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    padding-bottom: 20px;
 }
 
 .card-header {
@@ -90,7 +83,7 @@
     flex-direction: column;
     row-gap: 7px;
     margin-top: 10px;
-    align-self: flex-end    ;
+    align-self: flex-end;
 }
 
 .answer-card {
@@ -103,11 +96,13 @@
 }
 
 .answer {
-    width: 450px;
+    width: 570px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    align-self: flex-end;
     flex-direction: row;
+    column-gap: 5px;
     margin-top: 10px;
 }
 
@@ -124,7 +119,6 @@
 .answer>button {
     background-color: black;
     color: white;
-    border: 2px solid #ebf2f7;
     border-radius: 20px;
     cursor: pointer;
     font-family: inherit;

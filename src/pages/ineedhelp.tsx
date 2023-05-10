@@ -21,7 +21,7 @@ export default function Upload() {
         const question = questionRef!.current!.value;
 
         if (!category || !question) {
-            setError('Porfavor, completa todos los campos');
+            setError('Si us plau, ompliu tots els camps');
             return;
         }
 
@@ -30,7 +30,7 @@ export default function Upload() {
             question: question
         }
 
-        fetch('/api/create', {
+        fetch('/api/posts/create', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -66,10 +66,10 @@ export default function Upload() {
 
     return (
         <Layout>
-            <h2 className={styles['title']}>Necesito Ayuda</h2>
+            <h1 className={styles['title']}>Necesito ajuda</h1>
 
             <Alert error={error} setError={setError} />
-            <form action="/api/create" method="POST">
+            <form action="/api/posts/create" method="POST">
                 <div className={styles["forms"]}>
 
                     <div className={styles["form-group"]}>
@@ -77,6 +77,7 @@ export default function Upload() {
                             Categoria
                         </label>
                         <select name="username" id="category" ref={categoryRef}>
+                            <option value="" selected disabled hidden>Escollir</option>
                             <option value="Matemàtiques">Matemàtiques</option>
                             <option value="Ciències Naturals">Ciències Naturals</option>
                             <option value="Llengua i Literatura">Llengua i Literatura</option>
@@ -89,19 +90,20 @@ export default function Upload() {
                             <option value="Francès">Idiomes Estrangers (Francès)</option>
                             <option value="Alemany">Idiomes Estrangers (Alemany)</option>
                             <option value="Religió">Religió</option>
+                            <option value="Altres">Altres</option>
                         </select>
 
                     </div>
 
                     <div className={styles["form-group"]}>
                         <label className="label" htmlFor="password">
-                            En que necesitas ayuda?
+                            Fes la teva pregunta
                         </label>
                         <textarea name="question" id="myTextArea" ref={questionRef} onInput={autoResize}></textarea>
                     </div>
                 </div>
 
-                <button id="new" type="button" onClick={handleAdd}>Pedir ayuda</button>
+                <button id="new" type="button" onClick={handleAdd}>Demanar ajuda</button>
 
             </form>
 

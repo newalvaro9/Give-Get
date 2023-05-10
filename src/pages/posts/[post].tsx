@@ -14,6 +14,29 @@ export default function Delete({ session, post, answers }: any) {
     const [writing, setWriting] = useState(false)
     const answerRef = useRef<HTMLTextAreaElement>(null)
 
+    const handleSubmit = () => {
+        const answer = answerRef.current?.value;
+        if (!answer) return;
+
+        const data = {
+            postid: post.postid,
+            answer: answer
+        }
+
+        fetch('/api/answers/create', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => router.reload())
+            .catch(error => {
+                alert("Internal server error")
+            });
+
+    }
+
     if (typeof window !== 'undefined') {
         document.addEventListener('keydown', function (event) {
             // Check if the event target is a textarea
@@ -36,60 +59,61 @@ export default function Delete({ session, post, answers }: any) {
     return (
         <Layout title={"View Post - Give Your Time"}>
             <div className={styles['view']}>
-                <div className={styles['wrapper']}>
-                    <div className={styles['q-card']}>
-                        <div className={styles['card-header']}>
-                            <Image
-                                src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
-                                alt='avatar'
-                                width={40}
-                                height={40}
-                            ></Image>
-                            <div className={styles['header-info']}>
-                                <h4>{post.postedBy.name}</h4>
-                                <p>{post.postedAt} · {post.category}</p>
+                <form action='/api/answers/create' method='POST'>
+
+                    <div className={styles['wrapper']}>
+                        <div className={styles['card']}>
+                            <div className={styles['card-header']}>
+                                <Image
+                                    src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
+                                    alt='avatar'
+                                    width={40}
+                                    height={40}
+                                ></Image>
+                                <div className={styles['header-info']}>
+                                    <h4>{post.postedBy.name}</h4>
+                                    <p>{post.postedAt} · {post.category}</p>
+                                </div>
+                            </div>
+                            <div className={styles['card-body']}>
+                                <pre>{post.question}</pre>
+                            </div>
+                            <div className={styles['helper']}>
+                                {writing || (
+                                    <button onClick={() => setWriting(true)}>Respondre</button>
+                                )}
                             </div>
                         </div>
-                        <div className={styles['card-body']}>
-                            <pre>{post.question}</pre>
-                        </div>
-                        <div className={styles['helper']}>
-                            {writing || (
-                                <button onClick={() => setWriting(true)}>Responder</button>
-                            )}
-                        </div>
-                    </div>
-                    {/* <div className={styles['answer']}>
-                    {writing && (
-                        <>
-                            <textarea name="answer" id="myTextArea" ref={answerRef} onInput={autoResize}></textarea>
-                            <button>&nbsp;{'>'}&nbsp;</button>
-                        </>
-                    )}
-                </div> */}
-                    <div className={styles['answers']}>
-                        {answers.map((answer: any) => (
-                            <div className={styles['answer-card']}>
-                                <div className={styles['card-header']}>
-                                    <Image
-                                        src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
-                                        alt='avatar'
-                                        width={40}
-                                        height={40}
-                                    ></Image>
-                                    <div className={styles['header-info']}>
-                                        <h4>{answer.postedBy.name}</h4>
-                                        <p>{answer.postedAt}</p>
+                        {writing && (
+                            <div className={styles['answer']}>
+                                <textarea name="answer" id="myTextArea" ref={answerRef} onInput={autoResize}></textarea>
+                                <button type='button' onClick={handleSubmit}>&nbsp;{'>'}&nbsp;</button>
+                            </div>
+                        )}
+                        <div className={styles['answers']}>
+                            {answers.map((answer: any) => (
+                                <div className={styles['answer-card']}>
+                                    <div className={styles['card-header']}>
+                                        <Image
+                                            src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
+                                            alt='avatar'
+                                            width={40}
+                                            height={40}
+                                        ></Image>
+                                        <div className={styles['header-info']}>
+                                            <h4>{answer.postedBy.name}</h4>
+                                            <p>{answer.postedAt}</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles['card-body']}>
+                                        <pre>{answer.content}</pre>
                                     </div>
                                 </div>
-                                <div className={styles['card-body']}>
-                                    <pre>{answer.content}</pre>
-                                </div>
-                            </div>
-                        ))
-                        }
+                            ))
+                            }
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </Layout>
     )
@@ -120,26 +144,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         question: post.question,
     };
 
+    const ansData = post.answers.map((p: any) => {
+        return {
+            postedBy: {
+                userid: p.postedBy.userid,
+                name: p.postedBy.name
+            },
+            postedAt: formatDate(p.postedAt),
+            content: p.content
+        }
+    })
+
     return {
         props: {
             session: session,
             post: data,
-            answers: post.answers || [{
-                postedBy: {
-                    userid: 2,
-                    name: "Pepito"
-                },
-                postedAt: formatDate(Date.now()),
-                content: "Ut et magna at felis commodo dignissim ac non turpis. Morbi tincidunt nec nulla sed condimentum. Praesent auctor eget urna sit amet commodo. Duis interdum elit dapibus nunc consectetur, a porttitor lorem luctus. In luctus interdum ex sed porttitor. Ut vitae ornare ante, eu euismod sapien. Proin sed lorem enim."
-            },
-            {
-                postedBy: {
-                    userid: 2,
-                    name: "Pepito"
-                },
-                postedAt: formatDate(Date.now()),
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse rutrum, nisl at interdum accumsan, turpis sem maximus mauris, sed porta ipsum eros sed nisl. Etiam fringilla pharetra nulla, at bibendum velit suscipit non. Vestibulum quis sodales ante, vitae pretium libero. Proin porta nunc sed felis tempor mollis. Ut elit nibh, ultrices et ex nec, congue pulvinar lacus. Suspendisse eleifend nisl ut semper ultrices. Ut non lacus neque. Fusce tempus augue a ligula lobortis ultricies. Phasellus finibus est at accumsan fermentum. Maecenas molestie, neque a rutrum aliquam, tortor ipsum porttitor erat, quis congue nisl justo ac libero. Aenean tincidunt mauris nec eros feugiat bibendum. Morbi eu nulla ac leo euismod posuere quis ac enim. Aliquam id diam est. Quisque id erat risus. Proin eget nisl sed justo posuere convallis. Phasellus varius porttitor felis id lacinia."
-            }]
+            answers: ansData
         }
     }
 }

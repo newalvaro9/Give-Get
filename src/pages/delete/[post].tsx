@@ -13,7 +13,7 @@ export default function Delete({ session, postid }: any) {
         const data = {
             postid: postid
         }
-        fetch('/api/delete', {
+        fetch('/api/posts/delete', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -28,7 +28,7 @@ export default function Delete({ session, postid }: any) {
 
     return (
         <Layout title={"Delete Post - Give Your Time"}>
-            <form action="/api/delete" method="POST">
+            <form action="/api/posts/delete" method="POST">
                 <div className={styles["card"]}>
                     <div className={styles["card-body"]}>
                         <h2 className={styles['title']}>Segur que vols eliminar el post número {postid}?</h2>

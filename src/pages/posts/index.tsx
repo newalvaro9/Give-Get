@@ -37,47 +37,42 @@ export default function Home({ arrayData, sessionUserId }: Props) {
 
   return (
     <Layout setSearchQuery={setSearchQuery}>
-      <h1>Gente que necesita ayuda</h1>
-      <div className={styles['homeWr']}>
-        <div className={styles['cards']}>
-          {arrayData.filter((item) => item.question.toLowerCase().includes(searchQuery.toLowerCase())).map(data => (
-            <div className={styles['card']}>
-              <div className={styles['card-header']}>
-                <Image
-                  src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
-                  alt='avatar'
-                  width={40}
-                  height={40}
-                ></Image>
-                <div className={styles['header-info']}>
-                  <h4>{data.postedBy.name}</h4>
-                  <p>{data.postedAt} · {data.category}</p>
-                </div>
-              </div>
-              <div className={styles['card-body']}>
-                <pre>{data.question}</pre>
-              </div>
-              <div className={styles['card-helpers']}>
-                <div className={styles['helper']}>
-                  <button onClick={() => handleHelp(data.postid)}>AJUDA'M</button>
-                  {data.postedBy.userid === sessionUserId && (
-                    <button onClick={() => handleDelete(data.postid)}>
-                      <Image
-                        src={"/trash.svg"}
-                        width={20}
-                        height={15}
-                        alt={'Delete'}
-                      />
-                    </button>
-                  )}
-                </div>
+      <h1>Gent que necesita ajuda</h1>
+      <div className={styles['cards']}>
+        {arrayData.filter((item) => item.question.toLowerCase().includes(searchQuery.toLowerCase())).map(data => (
+          <div className={styles['card']}>
+            <div className={styles['card-header']}>
+              <Image
+                src={'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg'}
+                alt='avatar'
+                width={40}
+                height={40}
+              ></Image>
+              <div className={styles['header-info']}>
+                <h4>{data.postedBy.name}</h4>
+                <p>{data.postedAt} · {data.category}</p>
               </div>
             </div>
-          ))}
-        </div>
-        <div className={styles['recentAct']}>
-          
-        </div>
+            <div className={styles['card-body']}>
+              <pre>{data.question}</pre>
+            </div>
+            <div className={styles['card-helpers']}>
+              <div className={styles['helper']}>
+                <button onClick={() => handleHelp(data.postid)}>AJUDA'M</button>
+                {data.postedBy.userid === sessionUserId && (
+                  <button onClick={() => handleDelete(data.postid)}>
+                    <Image
+                      src={"/trash.svg"}
+                      width={20}
+                      height={15}
+                      alt={'Delete'}
+                    />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </Layout >
   )

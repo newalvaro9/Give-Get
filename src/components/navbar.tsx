@@ -15,9 +15,7 @@ export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | 
     return (
         <nav id='navbar' className={`${styles["navbar"]} ${styles["navbar-expand-lg"]}`}>
             <div className={`${styles["container-fluid"]}`}>
-                <Link href="/" className={styles["navbar-brand"]}>Give Your Time</Link>
-                <Link href="/auth/login" className={styles["nav-link"]}>Contacte</Link>
-                <Link href="/auth/login" className={styles["nav-link"]}></Link>
+                <Link href="/posts" className={styles["navbar-brand"]}>Give Your Time</Link>
 
                 <button type="button" className={styles["navbar-toggler"]} onClick={toggleHamburguer}>
                     <span className={styles["navbar-toggler-icon"]}></span>
@@ -28,6 +26,8 @@ export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | 
                         {setSearchQuery && (
                             <input className={styles["nav-input"]} onChange={(e) => setSearchQuery(e.target.value)}></input>
                         )}
+                        
+                        <Link href="/auth/login" className={styles["nav-link"]}>Contacte</Link>
                         {session ? (
                             <>
                                 <Link href="/ineedhelp" className={styles["nav-link"]}>Publicar</Link>

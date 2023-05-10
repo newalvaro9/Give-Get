@@ -27,7 +27,7 @@ const Posts = new mongoose.Schema({
         type: String,
         required: true
     },
-    answers : {
+    answers: {
         type: Array
     }
 });
