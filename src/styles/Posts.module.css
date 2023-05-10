@@ -1,4 +1,8 @@
 /* CARD */
+.homeWr {
+
+}
+
 .cards {
     display: flex;
     flex-direction: column;
@@ -12,6 +16,22 @@
     padding: 24px;
     border: 2px solid #ebf2f7;
     border-radius: 8px;
+    align-self: center;
+}
+
+.q-card {
+    width: 650px;
+    height: fit-content;
+    background-color: white;
+    padding: 24px;
+    border: 2px solid #ebf2f7;
+    border-radius: 8px;
+    align-self: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-header {
@@ -65,6 +85,23 @@
     padding-top: 30px;
 }
 
+.answers {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+    margin-top: 10px;
+    align-self: flex-end    ;
+}
+
+.answer-card {
+    width: 600px;
+    height: fit-content;
+    background-color: white;
+    padding: 24px;
+    border: 2px solid #ebf2f7;
+    border-radius: 8px;
+}
+
 .answer {
     width: 450px;
     display: flex;
@@ -74,18 +111,17 @@
     margin-top: 10px;
 }
 
-.answer>span {
+.answer>textarea {
     width: 100%;
     outline: none;
     border-radius: 20px;
     padding: 5px 0px 5px 13px;
-    font-size: 20px;
-    height: fit-content;
+    font-size: 14px;
     background-color: white;
     border: 1px solid black;
 }
 
-.answer> button {
+.answer>button {
     background-color: black;
     color: white;
     border: 2px solid #ebf2f7;

@@ -15,7 +15,7 @@ export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | 
     return (
         <nav id='navbar' className={`${styles["navbar"]} ${styles["navbar-expand-lg"]}`}>
             <div className={`${styles["container-fluid"]}`}>
-                {/* <Link href="/" className={styles["navbar-brand"]}>Give Your Time</Link> */}
+                <Link href="/" className={styles["navbar-brand"]}>Give Your Time</Link>
                 <Link href="/auth/login" className={styles["nav-link"]}>Contacte</Link>
                 <Link href="/auth/login" className={styles["nav-link"]}></Link>
 
