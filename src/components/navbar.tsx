@@ -2,11 +2,13 @@ import { signOut, useSession } from "next-auth/react"
 import { useState } from "react";
 import styles from '@/styles/Navbar.module.css'
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | undefined }) {
     const { data: session } = useSession();
 
     const [showNavbarResponsive, setShowNavbarResponsive] = useState<boolean>(false)
+    const [searching, setSearching] = useState<boolean>(false);
 
     const toggleHamburguer = () => {
         setShowNavbarResponsive(prev => !prev)
@@ -24,10 +26,21 @@ export default function Navbar({ setSearchQuery }: { setSearchQuery: Function | 
                     <div className={`${styles['navbar-nav']} ${styles['ms-auto']}`}>
 
                         {setSearchQuery && (
-                            <input className={styles["nav-input"]} onChange={(e) => setSearchQuery(e.target.value)}></input>
+                            searching ? (
+                                <input type="search" className={styles["nav-input"]} onChange={(e) => setSearchQuery(e.target.value)}></input>
+                            ) : (
+                                <Image
+                                    src={"/magnifying.svg"}
+                                    width={20}
+                                    height={20}
+                                    alt={'Search'}
+                                    style={{ alignSelf: 'center', cursor: 'pointer' }}
+                                    onClick={() => setSearching(true)}
+                                />
+                            )
                         )}
-                        
-                        <Link href="/auth/login" className={styles["nav-link"]}>Contacte</Link>
+
+                        <Link href="/" className={styles["nav-link"]}>Contacte</Link>
                         {session ? (
                             <>
                                 <Link href="/ineedhelp" className={styles["nav-link"]}>Publicar</Link>
