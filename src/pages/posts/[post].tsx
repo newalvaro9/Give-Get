@@ -9,10 +9,14 @@ import formatDate from '../../../utils/formatDate';
 import Image from 'next/image';
 import { useState, useRef } from 'react';
 
-export default function Delete({ session, post, answers }: any) {
+export default function Delete({ post, answers, sessionX }: any) {
     const router = useRouter();
     const [writing, setWriting] = useState(false)
     const answerRef = useRef<HTMLTextAreaElement>(null)
+
+    const handleLogin = () => {
+        router.push('/auth/login');
+    }
 
     const handleSubmit = () => {
         const answer = answerRef.current?.value;
@@ -57,7 +61,7 @@ export default function Delete({ session, post, answers }: any) {
 
 
     return (
-        <Layout title={"View Post - Give Your Time"}>
+        <Layout title={`${post.question.slice(0, 40) + (post.question.length > 40 ? "..." : "")} - Give & Get`}>
             <div className={styles['view']}>
                 <form action='/api/answers/create' method='POST'>
 
@@ -79,8 +83,10 @@ export default function Delete({ session, post, answers }: any) {
                                 <pre>{post.question}</pre>
                             </div>
                             <div className={styles['helper']}>
-                                {writing || (
-                                    <button onClick={() => setWriting(true)}>Respondre</button>
+                                {sessionX ? (
+                                    <button type="button" onClick={() => setWriting(true)}>Respondre</button>
+                                ) : (
+                                    <button type="button" onClick={handleLogin}>Inicia sessió per respondre</button>
                                 )}
                             </div>
                         </div>
@@ -114,8 +120,8 @@ export default function Delete({ session, post, answers }: any) {
                         </div>
                     </div>
                 </form>
-            </div>
-        </Layout>
+            </div >
+        </Layout >
     )
 }
 
@@ -132,7 +138,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             },
         }
     }
-    const session = await getSession(context);
     const data = {
         postid: post.postid,
         postedBy: {
@@ -155,11 +160,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     })
 
+    const session = await getSession(context);
+
     return {
         props: {
-            session: session,
             post: data,
-            answers: ansData
+            answers: ansData,
+            sessionX: session
         }
     }
 }

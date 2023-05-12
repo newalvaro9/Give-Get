@@ -21,10 +21,10 @@ type Props = {
     question: string;
     answersLength: number;
   }>;
-  sessionUserId: number;
+  session: any;
 }
 
-export default function Home({ arrayData, sessionUserId }: Props) {
+export default function Home({ arrayData, session }: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const router = useRouter();
 
@@ -60,17 +60,7 @@ export default function Home({ arrayData, sessionUserId }: Props) {
             <div className={styles['card-helpers']}>
               <div className={styles['helper']}>
                 <button onClick={() => handleHelp(data.postid)}>AJUDA'M</button>
-                {data.postedBy.userid === sessionUserId && (
-                  <button onClick={() => handleDelete(data.postid)}>
-                    <Image
-                      src={"/trash.svg"}
-                      width={20}
-                      height={15}
-                      alt={'Delete'}
-                    />
-                  </button>
-                )}
-                <p>{data.answersLength} respostes</p>
+                <p>{data.answersLength} {data.answersLength === 1 ? "resposta" : "respostes"}</p>
               </div>
             </div>
           </div>
@@ -106,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       arrayData: arrayData,
-      sessionUserId: (session?.user as any).userid
+      session: session
     }
   };
 }

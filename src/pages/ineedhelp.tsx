@@ -65,8 +65,8 @@ export default function Upload() {
 
 
     return (
-        <Layout>
-            <h1 className={styles['title']}>Necesito ajuda</h1>
+        <Layout title={"Necessito ajuda - Give & Get"}>
+            <h1 className={styles['title']}>Necessito ajuda</h1>
 
             <Alert error={error} setError={setError} />
             
@@ -79,17 +79,20 @@ export default function Upload() {
                         </label>
                         <select name="username" id="category" ref={categoryRef}>
                             <option value="" selected disabled hidden>Escollir</option>
+                            <option value="Llengua Espanyola">Llengua Espanyola</option>
+                            <option value="Llengua Catalana">Llengua Catalana</option>
+                            <option value="Literatura Espanyola">Literatura Espanyola</option>
+                            <option value="Literatura Catalana">Literatura Catalana</option>
+                            <option value="Anglès">Idiomes Estrangers (Anglès)</option>
+                            <option value="Francès">Idiomes Estrangers (Francès)</option>
+                            <option value="Alemany">Idiomes Estrangers (Alemany)</option>
                             <option value="Matemàtiques">Matemàtiques</option>
                             <option value="Ciències Naturals">Ciències Naturals</option>
-                            <option value="Llengua i Literatura">Llengua i Literatura</option>
                             <option value="Història">Història</option>
                             <option value="Geografia">Geografia</option>
                             <option value="Educació Física">Educació Física</option>
                             <option value="Tecnologia">Tecnologia</option>
                             <option value="Informàtica">Informàtica</option>
-                            <option value="Anglès">Idiomes Estrangers (Anglès)</option>
-                            <option value="Francès">Idiomes Estrangers (Francès)</option>
-                            <option value="Alemany">Idiomes Estrangers (Alemany)</option>
                             <option value="Religió">Religió</option>
                             <option value="Altres">Altres</option>
                         </select>

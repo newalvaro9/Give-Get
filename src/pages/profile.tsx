@@ -34,8 +34,8 @@ export default function Home({ arrayData }: Props) {
   }
 
   return (
-    <Layout>
-      <h1 style={{textAlign: 'center'}}>Les meves preguntes</h1>
+    <Layout title={"Perfil - Give & Get"}>
+      <h1 style={{ textAlign: 'center' }}>Les meves preguntes</h1>
       <div className={styles['cards']}>
         {arrayData.map(data => (
           <div className={styles['card']}>
@@ -65,7 +65,7 @@ export default function Home({ arrayData }: Props) {
                     alt={'Delete'}
                   />
                 </button>
-                <p>{data.answersLength} respostes</p>
+                <p>{data.answersLength} {data.answersLength === 1 ? "resposta" : "respostes"}</p>
               </div>
             </div>
           </div>
@@ -78,6 +78,15 @@ export default function Home({ arrayData }: Props) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
   await connect();
   const rawData = await posts.find({ "postedBy.userid": (session?.user as any).userid });
   const arrayData = rawData.map((item: any) => {

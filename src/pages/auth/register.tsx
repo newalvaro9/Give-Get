@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { getSession, signIn } from "next-auth/react";
 import type { GetServerSideProps } from 'next/types';
 import { useRouter } from 'next/router';
-
+import styles from '@/styles/Card.module.css'
 import Layout from '@/components/layout';
 import Alert from '@/components/alert';
 
@@ -27,7 +27,7 @@ export default function Register() {
         const confirm_password = confirm_passwordRef!.current!.value;
 
         if (!email || !username || !password || !confirm_password) {
-            setError('Please, fill in all fields');
+            setError('Si us plau, ompliu tots els camps');
             return;
         }
 
@@ -44,12 +44,12 @@ export default function Register() {
                         router.push('/');
                     }
                     else if (error === "EmailPicked") {
-                        setError("Email address is already in use");
+                        setError("El correu electrònic ja està en us");
                     }
                     else if (error === "UsernamePicked") {
-                        setError("Username is already in use");
+                        setError("El nom d'usuari ja està en us");
                     } else if (error === "Invalid") {
-                        setError("Enter a valid email address");
+                        setError("Introdueix un correu electrònic vàlid");
                     }
                     else {
                         console.log(error)
@@ -57,10 +57,10 @@ export default function Register() {
                     }
                 })
             } else {
-                setError("Passwords do not match")
+                setError("Les contrasenyes no coincideixen")
             }
         } else {
-            setError("Enter a valid email address")
+            setError("Introdueix un correu electrònic vàlid")
         }
     }
 
@@ -73,41 +73,48 @@ export default function Register() {
     }
 
     return (
-        <Layout title={"Register"}>
+        <Layout title={"Registrar-me - Give & Get"}>
             <form action="/api/auth/callback/credentials" method="POST">
+                <div className={styles["card"]}>
+                    <div className={styles["card-body"]}>
+                        <h2 className={styles['title']}>Registre d'usuari</h2>
 
-                <Alert error={error} setError={setError} />
+                        <Alert error={error} setError={setError} />
 
-                <div>
-                    <label className="label" htmlFor="username">
-                        Email
-                    </label>
-                    <input type="email" name="email" ref={emailRef} required />
+                        <div className={styles["forms"]}>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="username">
+                                    Correu electrònic
+                                </label>
+                                <input type="email" name="email" ref={emailRef} required />
+                            </div>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="username">
+                                    Nom d'usuari
+                                </label>
+                                <input type="text" name="username" ref={usernameRef} required />
+                            </div>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="password">
+                                    Contrasenya
+                                </label>
+                                <input type="password" name="password" ref={passwordRef} required />
+                            </div>
+
+                            <div className={styles["form-group"]}>
+                                <label className="label" htmlFor="username">
+                                    Confirmar contrasenya
+                                </label>
+                                <input type="password" name="confirm_password" ref={confirm_passwordRef} required />
+                            </div>
+                        </div>
+
+                        <button id="login" type="button" onClick={handleSignIn} className={styles["submit-input"]}>Registar-me</button>
+                    </div>
                 </div>
-
-                <div>
-                    <label className="label" htmlFor="username">
-                        Username
-                    </label>
-                    <input type="text" name="username" ref={usernameRef} required />
-                </div>
-
-                <div>
-                    <label className="label" htmlFor="password">
-                        Password
-                    </label>
-                    <input type="password" name="password" ref={passwordRef} required />
-                </div>
-
-                <div>
-                    <label className="label" htmlFor="username">
-                        Confirm password
-                    </label>
-                    <input type="password" name="confirm_password" ref={confirm_passwordRef} required />
-                </div>
-
-                <button id="register" type="button" onClick={handleSignIn}>Register</button>
-
             </form>
         </Layout>
     )

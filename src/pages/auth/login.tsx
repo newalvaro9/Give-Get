@@ -23,7 +23,7 @@ export default function Login() {
         const password = passwordRef!.current!.value;
 
         if (!username || !password) {
-            setError('Please, fill in all fields');
+            setError('Si us plau, ompliu tots els camps');
             return;
         }
 
@@ -37,7 +37,7 @@ export default function Login() {
                 router.push('/');
             }
             else if (error === "CredencialesIncorrectas") {
-                setError("Incorrect username or password");
+                setError("Nom d'usuari incorrecta");
             }
             else {
                 setError("Server error, try again later");
@@ -54,11 +54,11 @@ export default function Login() {
     }
 
     return (
-        <Layout title={"Iniciar sesión - Give Your Time"}>
+        <Layout title={"Iniciar sessió - Give & Time"}>
             <form action="/api/auth/callback/credentials" method="POST">
                 <div className={styles["card"]}>
                     <div className={styles["card-body"]}>
-                        <h2 className={styles['title']}>Inicia sesión para continuar</h2>
+                        <h2 className={styles['title']}>Inicia sessió per continuar</h2>
 
                         <Alert error={error} setError={setError} />
 
@@ -66,20 +66,20 @@ export default function Login() {
 
                             <div className={styles["form-group"]}>
                                 <label className="label" htmlFor="username">
-                                    Usuario
+                                    Usuari
                                 </label>
                                 <input type="text" id="username" name="username" ref={usernameRef} required />
                             </div>
 
                             <div className={styles["form-group"]}>
                                 <label className="label" htmlFor="password">
-                                    Contraseña
+                                    Contrasenya
                                 </label>
                                 <input type="password" name="password" ref={passwordRef} required />
                             </div>
                         </div>
 
-                        <button id="login" type="button" onClick={handleSignIn} className={styles["submit-input"]}>Iniciar sesión</button>
+                        <button id="login" type="button" onClick={handleSignIn} className={styles["submit-input"]}>Iniciar sessió</button>
                     </div>
                 </div>
             </form>
