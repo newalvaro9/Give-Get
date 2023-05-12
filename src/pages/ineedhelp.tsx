@@ -69,6 +69,7 @@ export default function Upload() {
             <h1 className={styles['title']}>Necesito ajuda</h1>
 
             <Alert error={error} setError={setError} />
+            
             <form action="/api/posts/create" method="POST">
                 <div className={styles["forms"]}>
 

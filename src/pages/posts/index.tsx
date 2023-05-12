@@ -19,6 +19,7 @@ type Props = {
     postedAt: string;
     category: string;
     question: string;
+    answersLength: number;
   }>;
   sessionUserId: number;
 }
@@ -69,10 +70,14 @@ export default function Home({ arrayData, sessionUserId }: Props) {
                     />
                   </button>
                 )}
+                <p>{data.answersLength} respostes</p>
               </div>
             </div>
           </div>
         ))}
+        {arrayData.filter((item) => !item.question.toLowerCase().includes(searchQuery.toLowerCase())).length === arrayData.length && (
+          <h3 style={{ textAlign: 'center', marginTop: '100px' }}>No s'ha trobat ninguna pregunta</h3>
+        )}
       </div>
     </Layout >
   )
@@ -91,7 +96,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
       postedAt: formatDate(item.postedAt),
       category: item.category,
-      question: item.question
+      question: item.question,
+      answersLength: item.answers.length
     };
   }).reverse();
 

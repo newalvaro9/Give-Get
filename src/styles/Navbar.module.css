@@ -139,6 +139,7 @@
 
 .nav-link {
     display: block;
+    align-self: center;
     padding: .5rem 1rem;
     color: #e3eef2;
     text-decoration: none;
@@ -297,4 +298,45 @@
     font-size: inherit;
     font-style: inherit;
     font-weight: inherit;
+}
+
+
+.search {
+    display: flex;
+    align-items: center;
+    background: #47515f;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px 5px 10px 10px;
+}
+
+.search:hover>.search-txt {
+    width: 200px;
+    padding: 0 8px;
+    color: #E3EEF2;
+    font-family: 'Pangolin', cursive;
+}
+
+.search-btn {
+    color: red;
+    float: right;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-txt {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: #E3EEF2;
+    font-size: 16px;
+    transition: ease-in 0.4s;
+    line-height: 40px;
+    width: 110px;
+    font-family: 'Pangolin', cursive;
 }

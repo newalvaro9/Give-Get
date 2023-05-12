@@ -51,7 +51,14 @@
 .card-helpers {
     margin-top: 16px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+}
+
+.helper {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
 .helper>button {
