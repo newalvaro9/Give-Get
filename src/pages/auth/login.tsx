@@ -37,7 +37,7 @@ export default function Login() {
                 router.push('/');
             }
             else if (error === "CredencialesIncorrectas") {
-                setError("Nom d'usuari incorrecta");
+                setError("Nom d'usuari o contrasenya incorrecte");
             }
             else {
                 setError("Server error, try again later");
