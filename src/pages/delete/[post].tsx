@@ -27,7 +27,7 @@ export default function Delete({ session, postid }: any) {
     }
 
     return (
-        <Layout title={"Delete Post - Give Your Time"}>
+        <Layout title={"Eliminar pregunta - Give Your Time"}>
             <form action="/api/posts/delete" method="POST">
                 <div className={styles["card"]}>
                     <div className={styles["card-body"]}>
