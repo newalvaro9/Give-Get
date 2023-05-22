@@ -69,6 +69,7 @@ export default function Home({ arrayData, session }: Props) {
           <h3 style={{ textAlign: 'center', marginTop: '100px' }}>No s'ha trobat ninguna pregunta</h3>
         )}
       </div>
+      <p style={{position: 'fixed', bottom: -3, right: 12}}>Developed by <a href="https://github.com/newalvaro9">Álvaro</a> with ❤️</p>
     </Layout >
   )
 }
